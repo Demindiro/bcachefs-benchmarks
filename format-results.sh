@@ -1,23 +1,25 @@
 #!/bin/sh
 
-echo -n 'Mode ' > res-999.tsv
+COLUMN=$1
+FILES="${@:2}"
 
-for f in results-*
+echo -n 'Mode '
+
+for f in $FILES
 do
-	echo -n "$f " >> res-999.tsv
+	echo -n "$f "
 done
-echo >> res-999.tsv
+echo
 
 for i in $(seq 28 153)
 do
-	awk "NR==$i" $f | awk '{$1=$1}1' | cut -f 1-2 -d ' ' | tr ' ' '-' | tr -d '\n' >> res-999.tsv
-	echo -n ' ' >> res-999.tsv
-	j=3
-	for f in results-*
+	echo -n '"'
+	awk "NR==$i" $f | awk '{$1=$1}1' | cut -f 1-2 -d ' ' | tr ' ' '/' | tr -d '\n'
+	echo -n '" '
+	for f in $FILES
 	do
-		awk "NR==$i" $f | awk '{$1=$1}1' | cut -f $j -d ' ' | tr -d '\n' >> res-999.tsv
-		echo -n ' ' >> res-999.tsv
-		((j++))
+		awk "NR==$i" $f | awk '{$1=$1}1' | cut -f $COLUMN -d ' ' | tr -d '\n'
+		echo -n ' '
 	done
-	echo >> res-999.tsv
+	echo
 done
