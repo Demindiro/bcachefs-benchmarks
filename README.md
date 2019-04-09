@@ -1,5 +1,10 @@
 # Bunch 'o random data about me benchmarking bcachefs
 
+# DO NOT TRUST THESE BENCHMARKS
+
+I thought I had to use the `-I` flag in `iozone` (`O_DIRECT`) but it should've been
+`-o` (`O_SYNC`). FML
+
 
 ## Requirements
 
@@ -31,3 +36,8 @@ I will commit the script later, but basically
 ./format-allcol.sh 6-HDD-1-NVMe base-vs-lz4-compression 6-HDD-1-NVMe/base-5 6-HDD-1-NVMe/lz4-compression-5
 ./mkplot.sh 6-HDD-1-NVMe/base-vs-lz4-compression
 ```
+
+
+## Important notes
+
+When testing caching, make sure the SSD doesn't throttle (+/- 50°C causes _heavy_ throttling)
